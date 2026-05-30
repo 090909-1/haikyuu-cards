@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>乌野高中排球部</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { 
+            background: linear-gradient(to right, #000, #000 40%, #8B0000 60%, #8B0000);
+            color: white; overflow-x: hidden;
+        }
+        .bg-text { 
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg);
+            font-size: 200px; font-weight: bold; color: #FFA500; z-index: -1; white-space: nowrap;
+            animation: scrollText 60s linear infinite;
+        }
+        @keyframes scrollText { 0% { transform: translate(-150%, -50%) rotate(-15deg); } 100% { transform: translate(50%, -50%) rotate(-15deg); } }
+        .header { text-align: center; padding: 50px 0; }
+        .main-title { 
+            font-size: 60px; background: linear-gradient(to right, #FFA500, #000);
+            -webkit-background-clip: text; color: transparent; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .team-photo { display: flex; justify-content: center; margin: 30px 0; }
+        .team-photo img { width: 45%; margin: 0 10px; border-radius: 8px; }
+        .section-title { 
+            text-align: center; font-size: 36px; margin: 50px 0 30px;
+            position: relative; display: inline-block; left: 50%; transform: translateX(-50%);
+        }
+        .section-title::after { 
+            content: ''; display: block; width: 100%; height: 4px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="4" viewBox="0 0 100 4"><path d="M0,2 Q10,0 20,2 T40,2 T60,2 T80,2 T100,2" fill="none" stroke="#FFA500" stroke-width="2"/><path d="M5,2 C8,1 12,3 15,2 C18,1 22,3 25,2 C28,1 32,3 35,2 C38,1 42,3 45,2 C48,1 52,3 55,2 C58,1 62,3 65,2 C68,1 72,3 75,2 C78,1 82,3 85,2 C88,1 92,3 95,2" fill="none" stroke="black" stroke-width="1"/></svg>');
+            background-size: 100% 100%;
+        }
+        .members { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .member-card { display: flex; margin-bottom: 40px; align-items: center; }
+        .member-img { width: 200px; height: 200px; margin-right: 20px; position: relative; }
+        .member-img img { width: 100%; height: 100%; object-fit: cover; border: 5px solid transparent; border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M10,10 Q50,0 90,10 T90,90 T10,90 T10,10 Z" fill="none" stroke="black" stroke-width="3"/><path d="M20,20 Q50,15 80,20 T80,80 T20,80 T20,20 Z" fill="none" stroke="black" stroke-width="2"/></svg>') 100 100 stretch; }
+        .member-info { background: #f5f5dc; color: black; padding: 15px; border: 3px solid black; border-radius: 5px; flex: 1; position: relative; }
+        .member-name { background: black; color: white; padding: 5px 10px; display: inline-block; border-radius: 3px 3px 0 0; position: absolute; top: -15px; left: 15px; font-weight: bold; }
+        .member-details { margin-top: 15px; }
+        .detail-block { background: #FFA500; padding: 8px; margin-bottom: 8px; border-radius: 3px; position: relative; overflow: hidden; }
+        .detail-block::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="none" stroke="white" stroke-width="1"/><line x1="10" y1="2" x2="10" y2="18" stroke="white" stroke-width="1"/><line x1="2" y1="10" x2="18" y2="10" stroke="white" stroke-width="1"/></svg>'); background-repeat: repeat; opacity: 0.2; }
+        .detail-title { font-weight: bold; margin-bottom: 3px; }
+        .volleyball-icon { position: absolute; top: 5px; right: 5px; width: 25px; height: 25px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25"><circle cx="12.5" cy="12.5" r="10" fill="#FFA500"/><circle cx="12.5" cy="12.5" r="8" fill="white"/><circle cx="12.5" cy="12.5" r="3" fill="#FFA500"/><line x1="12.5" y1="4.5" x2="12.5" y2="20.5" stroke="#FFA500" stroke-width="2"/><line x1="4.5" y1="12.5" x2="20.5" y2="12.5" stroke="#FFA500" stroke-width="2"/></svg>') no-repeat; }
+        .timeline { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+        .timeline-item { display: flex; align-items: center; margin-bottom: 20px; }
+        .timeline-icon { width: 40px; height: 40px; background: #FFA500; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-right: 15px; }
+        .timeline-icon svg { width: 25px; height: 25px; fill: white; }
+        .timeline-text { font-size: 18px; cursor: pointer; }
+        .bounce-ball { position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px; background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="white"/><circle cx="25" cy="25" r="15" fill="#FFA500"/><circle cx="25" cy="25" r="5" fill="white"/><line x1="25" y1="5" x2="25" y2="45" stroke="white" stroke-width="3"/><line x1="5" y1="25" x2="45" y2="25" stroke="white" stroke-width="3"/></svg>') no-repeat; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .cheer-stick { width: 0;height: 0;border-top: 12px solid transparent;border-bottom: 12px solid transparent;border-left: 20px solid #ff6600;cursor: pointer;position: fixed;bottom: 30px;right: 30px; cursor: pointer; transition: opacity 0.5s; }
+        .cheer-stick.blink { animation: blink 1s infinite alternate; }
+        @keyframes blink { from { opacity: 1; } to { opacity: 0.5; } }
+        timeline-item:first-child::after {content:'';position:absolute;top:12px;left:60px;width:150px;height:2px;background:#f47521;}
+    </style>
+</head>
+<body>
+    <div class="bg-text">飞吧，乌野！飞吧，乌野！飞吧，乌野！</div>
+    <div class="header">
+        <h1 class="main-title">飛べ、烏野！</h1>
+        <div class="team-photo">
+            <img src="1.jpg" alt="乌野排球部合照1">
+            <img src="2.jpg" alt="乌野排球部合照2">
+        </div>
+    </div>
+    <h2 class="section-title">乌野高中排球部·队员档案</h2>
+    <div class="members">
+        <div class="member-card">
+            <div class="member-img">
+                <img src="3.jpg" alt="日向翔阳">
+            </div>
+            <div class="member-info">
+                <div class="member-name">日向翔阳</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>162.8cm / 副攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“我要打败影山！”“飞吧！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>“小巨人”候补，用弹跳力弥补身高，和影山组成“怪人快攻”，是队伍的活力来源。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="4.jpg" alt="影山飞雄">
+            </div>
+            <div class="member-info">
+                <div class="member-name">影山飞雄</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>181.9cm / 二传手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“飞吧，球由我来托给你！”“破开主攻手面前的铁壁，我为此而生！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>曾被称为“球场上的王者”，后与日向组成“怪人组合”，拥有超群的球感和控球能力，是队伍的大脑。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="5.jpg" alt="月岛萤">
+            </div>
+            <div class="member-info">
+                <div class="member-name">月岛萤</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>190.1cm / 副攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“真麻烦啊”“别太热血了”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>乌野的“理智担当”，头脑聪明，擅长假动作和精准拦网，后期成为关键拦网手，和山口忠是从小一起长大的好友。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="6.jpg" alt="山口忠">
+            </div>
+            <div class="member-info">
+                <div class="member-name">山口忠</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>179.3cm / 副攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“我也想和强者对等地战斗！”“月，看我的！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>“乌野的矛”，苦练跳飘球成为关键发球员，高中三年级时担任乌野主将，带领队伍获得全国季军。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="7.jpg" alt="西谷夕">
+            </div>
+            <div class="member-info">
+                <div class="member-name">西谷夕</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>160.5cm / 自由人</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“大家的背后由我来守护！”“再一次喊着把球举给你吧，主攻手！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>乌野的“守护神”，靠本能行动的天才自由人，给队伍带来安全感，中学时获全国最佳自由人。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="8.jpg" alt="田中龙之介">
+            </div>
+            <div class="member-info">
+                <div class="member-name">田中龙之介</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>177.2cm / 主攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“看我用这记扣杀劈开你们！”“叫我前辈！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>性格热血，虽然爱耍帅但很有前辈样，和西谷一样喜欢被称为“前辈”，是队伍的气氛制造者之一。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="9.jpg" alt="泽村大地">
+            </div>
+            <div class="member-info">
+                <div class="member-name">泽村大地</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>184.7cm / 主攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“大家冷静下来，专注比赛！”“我们是乌野，会飞的乌！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>乌野的队长，为人正直认真，深受队员尊敬，是队伍的精神支柱，带领大家重建乌野的辉煌。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="10.jpg" alt="菅原孝支">
+            </div>
+            <div class="member-info">
+                <div class="member-name">菅原孝支</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>174.3cm / 二传手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“别担心，有我在呢”“影山，传球要更信任大家啊”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>温柔可靠的二传手前辈，擅长调节队伍气氛，是影山学习团队合作的对象，被称为“妈妈菅”。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="member-card">
+            <div class="member-img">
+                <img src="11.jpg" alt="东峰旭">
+            </div>
+            <div class="member-info">
+                <div class="member-name">东峰旭</div>
+                <div class="volleyball-icon"></div>
+                <div class="member-details">
+                    <div class="detail-block">
+                        <div class="detail-title">身高/位置</div>
+                        <div>188.3cm / 主攻手</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">台词</div>
+                        <div>“让我来扣杀！”“我不会再害怕了！”</div>
+                    </div>
+                    <div class="detail-block">
+                        <div class="detail-title">简介</div>
+                        <div>乌野的前王牌，曾因受挫短暂退队，回归后重拾信心，和西谷是默契搭档，扣球力量强大。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2 class="section-title">乌野名场面时间轴</h2>
+    <div class="timeline" style="display: flex; gap: 150px; padding-top: 20px;margin: 0 auto; max-width: 700px; justify-content: space-between">
+        <div class="timeline-item" style="position: relative;">
+            <div class="timeline-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="timeline-text" onclick="alert('青叶城西战：日向与影山首次配合“怪人快攻”，逆转战局！')">青叶城西战</div>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="16" stroke="currentColor" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div class="timeline-text" onclick="alert('白鸟泽战：全员协作，击败全国强队，晋级全国大赛！')">白鸟泽战</div>
+        </div>
+    </div>
+    <div class="bounce-ball"></div>
+    <div class="cheer-stick" onclick="toggleAudio()"></div>
+    <audio id="bgm" src="http://music.163.com/song/media/outer/url?id=473742897.mp3" autoplay loop>
+    <script>
+        const cheerStick = document.querySelector('.cheer-stick');
+        const bgm = document.getElementById('bgm');
+        let isPlaying = true;
+        function toggleAudio() {
+            if (isPlaying) {
+                bgm.pause();
+                cheerStick.classList.remove('blink');
+            } else {
+                bgm.play();
+                cheerStick.classList.add('blink');
+            }
+            isPlaying = !isPlaying;
+        }
+        bgm.addEventListener('play', () => {
+            cheerStick.classList.add('blink');
+        });
+        bgm.addEventListener('pause', () => {
+            cheerStick.classList.remove('blink');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.cheer-stick')) return;
+            const ball = document.createElement('div');
+            ball.style.position = 'fixed';
+            ball.style.width = '30px';
+            ball.style.height = '30px';
+            ball.style.background = 'url(data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><circle cx="15" cy="15" r="12" fill="white"/><circle cx="15" cy="15" r="8" fill="#FFA500"/><circle cx="15" cy="15" r="3" fill="white"/><line x1="15" y1="3" x2="15" y2="27" stroke="white" stroke-width="2"/><line x1="3" y1="15" x2="27" y2="15" stroke="white" stroke-width="2"/></svg>) no-repeat';
+            ball.style.left = `${e.clientX}px`;
+            ball.style.top = `${e.clientY}px`;
+            ball.style.zIndex = '100';
+            document.body.appendChild(ball);
+            setTimeout(() => {
+                ball.style.transition = 'all 1s ease-out';
+                ball.style.transform = 'translate(-50px, -100px) scale(0)';
+                ball.style.opacity = '0';
+                setTimeout(() => ball.remove(), 1000);
+            }, 10);
+        });
+    </script>
+</body>
+</html>
